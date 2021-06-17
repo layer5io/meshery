@@ -311,6 +311,7 @@ func start() error {
 	case "kubernetes":
 
 		version := currCtx.Version
+		serviceType := currCtx.ServiceType
 		if version == "latest" {
 			if currCtx.Channel == "edge" {
 				version = "master"
@@ -333,6 +334,11 @@ func start() error {
 
 		// change version in meshery-deployment manifest
 		err = utils.ChangeManifestVersion(utils.MesheryDeployment, version, filepath.Join(manifestFiles, utils.MesheryDeployment))
+		if err != nil {
+			return err
+		}
+
+		err = utils.ChangeManifestServiceType(utils.MesheryService, serviceType, filepath.Join(manifestFiles, utils.MesheryService))
 		if err != nil {
 			return err
 		}
@@ -374,11 +380,16 @@ func start() error {
 			return err
 		}
 
-		currCtx.Endpoint = utils.EndpointProtocol + "://" + endpoint.External.Address + ":" + strconv.Itoa(int(endpoint.External.Port))
+		if serviceType == "ClusterIP" {
+			currCtx.Endpoint = utils.EndpointProtocol + "://" + endpoint.Internal.Address + ":" + strconv.Itoa(int(endpoint.Internal.Port))
+			log.Info("Meshery is deployed in your cluster internally at " + currCtx.Endpoint)
+		} else {
+			currCtx.Endpoint = utils.EndpointProtocol + "://" + endpoint.External.Address + ":" + strconv.Itoa(int(endpoint.External.Port))
 
-		err = utils.ChangeConfigEndpoint(mctlCfg.CurrentContext, currCtx)
-		if err != nil {
-			return err
+			err = utils.ChangeConfigEndpoint(mctlCfg.CurrentContext, currCtx)
+			if err != nil {
+				return err
+			}
 		}
 
 		// switch to default case if the platform specified is not supported

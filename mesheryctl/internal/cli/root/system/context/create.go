@@ -8,11 +8,12 @@ import (
 )
 
 var (
-	url       = ""
-	tokenPath = ""
-	set       = false
-	adapters  = []string{}
-	platform  = ""
+	url         = ""
+	tokenPath   = ""
+	set         = false
+	adapters    = []string{}
+	platform    = ""
+	serviceType = ""
 )
 
 // createContextCmd represents the create command
@@ -38,6 +39,10 @@ var createContextCmd = &cobra.Command{
 			tempContext.Platform = platform
 		}
 
+		if serviceType != "" {
+			tempContext.ServiceType = serviceType
+		}
+
 		if len(adapters) >= 1 {
 			tempContext.Adapters = adapters
 		}
@@ -57,4 +62,5 @@ func init() {
 	createContextCmd.Flags().BoolVarP(&set, "set", "s", false, "Set as current context")
 	createContextCmd.Flags().StringArrayVarP(&adapters, "adapters", "a", []string{}, "List of adapters")
 	createContextCmd.Flags().StringVarP(&platform, "platform", "p", "", "Platform to deploy Meshery")
+	createContextCmd.Flags().StringVarP(&serviceType, "serviceType", "t", "LoadBalancer", "Controls service type of meshery deployed")
 }

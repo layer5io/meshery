@@ -502,6 +502,49 @@ func ChangeManifestVersion(fileName string, version string, filePath string) err
 	return nil
 }
 
+// ChangeManifestServiceType changes the service type of meshery deployment
+func ChangeManifestServiceType(fileName string, serviceType string, filePath string) error {
+	// setting up config type to yaml files
+	ViperK8sService.SetConfigType("yaml")
+
+	// setting up config file
+	ViperK8sService.SetConfigFile(filePath)
+	err := ViperK8sService.ReadInConfig()
+	if err != nil {
+		return fmt.Errorf("unable to read config %s | %s", fileName, err)
+	}
+
+	compose := K8sCompose{}
+	yamlFile, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
+	// unmarshal the file into structs
+	err = yaml.Unmarshal(yamlFile, &compose)
+	if err != nil {
+		return fmt.Errorf("unable to unmarshal config %s | %s", fileName, err)
+	}
+
+	compose.Spec.Type = serviceType
+
+	ViperK8sService.Set("apiVersion", compose.APIVersion)
+	ViperK8sService.Set("kind", compose.Kind)
+	ViperK8sService.Set("metadata", compose.Metadata)
+	ViperK8sService.Set("spec", compose.Spec)
+
+	// Marshal the structs
+	newConfig, err := yaml.Marshal(compose)
+	if err != nil {
+		return fmt.Errorf("unable to marshal config %s | %s", fileName, err)
+	}
+	err = ioutil.WriteFile(filePath, newConfig, 0644)
+	if err != nil {
+		return fmt.Errorf("unable to update config %s | %s", fileName, err)
+	}
+
+	return nil
+}
+
 // CreateManifestsFolder creates a new folder (.meshery/manifests)
 func CreateManifestsFolder() error {
 	log.Debug("deleting ~/.meshery/manifests folder...")

@@ -106,6 +106,8 @@ var (
 	ServiceAccount = "service-account.yaml"
 	// ViperCompose is an instance of viper for docker-compose
 	ViperCompose = viper.New()
+	// ViperK8sService is an instance of viper for meshery-service when platform is kubernetes
+	ViperK8sService = viper.New()
 	// ViperDocker is an instance of viper for the meshconfig file when the platform is docker
 	ViperDocker = viper.New()
 	// ViperK8s is an instance of viper for the meshconfig file when the platform is kubernetes
@@ -121,12 +123,13 @@ var ListOfAdapters = []string{"meshery-istio", "meshery-linkerd", "meshery-consu
 
 // TemplateContext is the template context provided when creating a config file
 var TemplateContext = config.Context{
-	Endpoint: EndpointProtocol + "://localhost:9081",
-	Token:    "Default",
-	Platform: "docker",
-	Adapters: ListOfAdapters,
-	Channel:  "stable",
-	Version:  "latest",
+	Endpoint:    EndpointProtocol + "://localhost:9081",
+	Token:       "Default",
+	Platform:    "docker",
+	Adapters:    ListOfAdapters,
+	Channel:     "stable",
+	Version:     "latest",
+	ServiceType: "LoadBalancer",
 }
 
 // TemplateToken is the template token provided when creating a config file
