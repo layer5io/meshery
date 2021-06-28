@@ -13,8 +13,10 @@ import NoSsr from '@material-ui/core/NoSsr';
 import Link from 'next/link';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import BuildIcon from "@material-ui/icons/Build";
 import MesheryNotification from './MesheryNotification';
 import User from './User';
+import Modal from './ConfigurationWizard/utilities/Modal'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faHome } from '@fortawesome/free-solid-svg-icons';
 
@@ -103,8 +105,23 @@ const styles = (theme) => ({
 });
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    };
+  }
+  handleOpen = () => {
+    this.setState({ open: true })
+  }
+  handleClose = () => {
+    this.setState({ open: false })
+  }
+  
   render() {
     const { classes, title, onDrawerToggle ,onDrawerCollapse} = this.props;
+    console.log('title', title)
+   
     return (
       <NoSsr>
         <React.Fragment>
@@ -150,6 +167,13 @@ class Header extends React.Component {
                       <Link href="/settings">
                         <SettingsIcon className={classes.headerIcons +" "+(title === 'Settings' ? classes.itemActiveItem : '')} />
                       </Link>
+                    </IconButton>
+                  </div>
+
+                  <div data-test="wizard-button">
+                    <IconButton color="inherit">
+                      <BuildIcon onClick={this.handleOpen} className={title === 'Wizard' ? classes.itemActiveItem : ''} />
+                      <Modal open={this.state.open} handleClose={this.handleClose} />
                     </IconButton>
                   </div>
 
@@ -218,7 +242,7 @@ Header.propTypes = {
 
 const mapStateToProps = (state) =>
   // console.log("header - mapping state to props. . . new title: "+ state.get("page").get("title"));
-  // console.log("state: " + JSON.stringify(state));
+  // console.log("state: " + JSON.stringify(state))
   ({ title: state.get('page').get('title') })
 ;
 
