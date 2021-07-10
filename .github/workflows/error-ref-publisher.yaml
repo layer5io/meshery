@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with: ${{ secrets.GH_ACCESS_TOKEN }}
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Setup Go
         uses: actions/setup-go@v1
