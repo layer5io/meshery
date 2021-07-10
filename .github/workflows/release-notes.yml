@@ -30,11 +30,11 @@ jobs:
             echo "Tag: " ${{ steps.release_drafter.outputs.tag_name }}
             printf '%b\n' "---\nlayout: release\ndate: $(date +'%Y-%m-%d')\ntag: ${{ steps.release_drafter.outputs.tag_name }}\n---\n\n${{ steps.release_drafter.outputs.body }} " > ./docs/_releases/${{ steps.release_drafter.outputs.tag_name }}.md
 
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_user_name: l5io
-          commit_user_email: ci@layer5.io
-          commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          commit_options: '--signoff'
-          commit_message: '[Docs] Release Notes for Meshery ${{ steps.release_drafter.outputs.tag_name }}'
+        - name: Commit changes
+          uses: stefanzweifel/git-auto-commit-action@v4
+          with:
+            commit_user_name: l5io
+            commit_user_email: ci@layer5.io
+            commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+            commit_options: '--signoff'
+            commit_message: '[Docs] Release Notes for Meshery ${{ steps.release_drafter.outputs.tag_name }}'
