@@ -3,11 +3,16 @@
   "max_code": 3000,
   "duplicate_codes": {},
   "duplicate_names": [
+    "ErrMesheryClientCode",
+    "ErrGrafanaBoardsCode",
+    "ErrNilClientCode",
+    "ErrCreateDataCode",
+    "ErrNoMeshSyncCode",
     "ErrNilClientCode",
     "ErrNoMeshSyncCode",
     "ErrGrafanaBoardsCode",
     "ErrCreateDataCode",
-    "ErrMesheryClientCode"
+    "ErrMesheryClientCode",
   ],
   "int_codes": [
     2011,
@@ -66,11 +71,22 @@
     2020,
     2035,
     2039,
+    2040,
+    2041,
+    2042,
+    2043,
+    2044,
+    2045,
+    2046,
+    2052,
+    2053,
+    2054,
+    3000,
     1001,
     2003,
     2008,
     2023,
-    2031
+    2031,
   ],
   "deprecated_new_default": null
 }
