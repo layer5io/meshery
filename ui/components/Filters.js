@@ -14,6 +14,7 @@ import {
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import DeleteIcon from "@material-ui/icons/Delete";
 import UploadIcon from "@material-ui/icons/Publish";
+import AddIcon from '@material-ui/icons/Add';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
@@ -24,6 +25,8 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { updateProgress } from "../lib/store";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import dataFetch from "../lib/data-fetch";
+import Popup from "./Popup";
+import MesheryRjsf from "./MesheryRjsf";
 
 const styles = (theme) => ({
   grid: {
@@ -36,6 +39,7 @@ const styles = (theme) => ({
 });
 
 function CustomToolbar(onClick) {
+  const [openPopup, setOpenPopup] = useState(false);
   return function Toolbar() {
     return (
       <>
@@ -46,6 +50,19 @@ function CustomToolbar(onClick) {
               <UploadIcon />
             </IconButton>
           </Tooltip>
+        </label>
+        <label htmlFor="filter-config">
+          <Tooltip title = "Filter Config">
+            <IconButton component="span" >
+              <AddIcon onClick={() => setOpenPopup(true)} />
+            </IconButton>
+          </Tooltip>
+          <Popup
+            title="Filter Config" 
+            openPopup = {openPopup}
+            setOpenPopup = {setOpenPopup}>
+            <MesheryRjsf />
+          </Popup>
         </label>
       </>
     );
@@ -339,7 +356,7 @@ function MesheryFilters({ updateProgress, enqueueSnackbar, closeSnackbar, user, 
     responsive: "scrollFullHeight",
     resizableColumns: true,
     serverSide: true,
-    selectableRows: "none",
+    selectableRows: "true",
     count,
     rowsPerPage: pageSize,
     rowsPerPageOptions: [10, 20, 25],
