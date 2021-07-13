@@ -5,6 +5,9 @@
   "duplicate_names": [
     "ErrNoMeshSyncCode",
     "ErrCreateDataCode",
+    "ErrGrafanaBoardsCode",
+    "ErrGrafanaBoardsCode",
+    "ErrCreateDataCode",
     "ErrLoadTestCode",
     "ErrMesheryClientCode",
     "ErrGrafanaBoardsCode",
@@ -73,6 +76,12 @@
     2045,
     2046,
     2047,
+    3000
+    1001,
+    2003,
+    2008,
+    2023,
+    2031
     2048,
     2049,
     2050,

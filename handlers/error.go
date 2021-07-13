@@ -7,6 +7,54 @@ import (
 )
 
 const (
+	ErrInvalidK8SConfigCode   = "2000"
+	ErrNilClientCode          = "2001"
+	ErrPrometheusScanCode     = "2002"
+	ErrGrafanaScanCode        = "2003"
+	ErrRecordPreferencesCode  = "2004"
+	ErrGrafanaConfigCode      = "2005"
+	ErrPrometheusConfigCode   = "2006"
+	ErrGrafanaQueryCode       = "2007"
+	ErrPrometheusQueryCode    = "2008"
+	ErrGrafanaBoardsCode      = "2009"
+	ErrPrometheusBoardsCode   = "2010"
+	ErrStaticBoardsCode       = "2011"
+	ErrRequestBodyCode        = "2012"
+	ErrMarshalCode            = "2013"
+	ErrUnmarshalCode          = "2014"
+	ErrEncodingCode           = "2015"
+	ErrParseBoolCode          = "2016"
+	ErrStreamEventsCode       = "2017"
+	ErrStreamClientCode       = "2018"
+	ErrUnmarshalEventCode     = "2019"
+	ErrPublishSmiResultsCode  = "2020"
+	ErrMarshalEventCode       = "2021"
+	ErrPluginOpenCode         = "2022"
+	ErrPluginLookupCode       = "2023"
+	ErrPluginRunCode          = "2024"
+	ErrParseFormCode          = "2025"
+	ErrQueryGetCode           = "2026"
+	ErrGetResultCode          = "2027"
+	ErrConvertToSpecCode      = "2028"
+	ErrFetchSMIResultsCode    = "2029"
+	ErrFormFileCode           = "2030"
+	ErrReadConfigCode         = "2031"
+	ErrLoadConfigCode         = "2032"
+	ErrOpenFileCode           = "2033"
+	ErrKubeVersionCode        = "2034"
+	ErrAddAdapterCode         = "2035"
+	ErrRetrieveDataCode       = "2036"
+	ErrValidAdapterCode       = "2037"
+	ErrOperationIDCode        = "2038"
+	ErrMeshClientCode         = "2039"
+	ErrApplyChangeCode        = "2040"
+	ErrRetrieveMeshDataCode   = "2041"
+	ErrApplicationFailureCode = "2042"
+	ErrDecodingCode           = "2043"
+	ErrRetrieveUserTokenCode  = "2044"
+	ErrFailToSaveCode         = "2045"
+	ErrFailToDeleteCode       = "2046"
+	ErrSaveSessionCode        = "2047"
 	ErrInvalidK8SConfigCode     = "2000"
 	ErrNilClientCode            = "2001"
 	ErrPrometheusScanCode       = "2002"
@@ -221,6 +269,9 @@ func ErrFailToDelete(err error, obj string) error {
 	return errors.New(ErrFailToDeleteCode, errors.Alert, []string{"Failed to Delete: ", obj}, []string{err.Error()}, []string{}, []string{})
 }
 
+func ErrSaveSession(err error) error {
+	return errors.New(ErrSaveSessionCode, errors.Alert, []string{"unable to save session"}, []string{err.Error()}, []string{}, []string{})
+=======
 func ErrBlankName(err error) error {
 	return errors.New(ErrBlankNameCode, errors.Alert, []string{"Error: name field is blank"}, []string{err.Error()}, []string{}, []string{"Provide a name for the test"})
 }
