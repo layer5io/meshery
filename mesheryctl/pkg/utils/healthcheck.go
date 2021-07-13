@@ -3,6 +3,7 @@ package utils
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os/exec"
 	"regexp"
 	"strconv"
@@ -114,6 +115,12 @@ func parseKubectlShortVersion(version string) ([3]int, error) {
 
 // IsMesheryRunning checks if the meshery server containers are up and running
 func IsMesheryRunning(currPlatform string) (bool, error) {
+	resp, err := http.Get("http://localhost:9081/api/server/version")
+	// Port number is subject to change depending on user's configuration on config.yaml
+
+	if resp != nil {
+		return true, nil
+	}
 	switch currPlatform {
 	case "docker":
 		{
@@ -153,6 +160,10 @@ func IsMesheryRunning(currPlatform string) (bool, error) {
 
 			return false, err
 		}
+	}
+
+	if err != nil {
+		return false, errors.Wrap(err, "Meshery not running locally")
 	}
 
 	return false, nil
