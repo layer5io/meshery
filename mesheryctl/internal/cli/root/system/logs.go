@@ -41,7 +41,9 @@ import (
 var logsCmd = &cobra.Command{
 	Use:   "logs",
 	Short: "Print logs",
-	Long:  `Print history of Meshery's logs and begin tailing them.`,
+	Long:  `Print history of Meshery's logs and begin tailing them.
+
+To view the logs of a specific component e.g. "mesheryctl system logs meshery-istio"`,
 	Args:  cobra.ArbitraryArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		log.Info("Starting Meshery logging...")
