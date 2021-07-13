@@ -59,6 +59,7 @@ func init() {
 		logsCmd,
 		startCmd,
 		stopCmd,
+		dashboardCmd,
 		restartCmd,
 		statusCmd,
 		updateCmd,
